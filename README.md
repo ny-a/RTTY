@@ -29,9 +29,17 @@ for j in range(waveFile.getnframes()):
 waveFile.close()
 ~~~
 ## Sample sound file
-should be convet to wave format.<p>
-https://en.wikipedia.org/wiki/File:RTTY.ogg <p>
-it is from wikipedia<p>
+This ogg file should be converted to wave format.
+https://en.wikipedia.org/wiki/File:RTTY.ogg
+it is from wikipedia
+
+### Convert ogg file to wave format
+
+Install [ffmpeg](https://www.ffmpeg.org/) and run:
+
+~~~
+ffmpeg -i RTTY.ogg -ar 8k -c:a pcm_u8 -f wav rtty3s.wav
+~~~
       
 ## Parameters
 Some parameters in the source code need to be modified according to the audio file to be input. 

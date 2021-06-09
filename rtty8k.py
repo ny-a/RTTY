@@ -1,6 +1,7 @@
 import wave
 import numpy as np
 import array
+import sys
 
 
 def read_wave_file(filename, signed = False, mark_frequency = 914, space_frequency = 1086):
@@ -33,5 +34,8 @@ def read_wave_file(filename, signed = False, mark_frequency = 914, space_frequen
 
 
 if __name__ == '__main__':
-    filename = 'rtty3s.wav'  # should be specify the filename.
+    if len(sys.argv) > 1:
+        filename = sys.argv[1]
+    else:
+        filename = 'rtty3s.wav'
     read_wave_file(filename)

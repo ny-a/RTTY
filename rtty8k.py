@@ -5,8 +5,8 @@ import array
 
 def read_wave_file(filename, mark_frequency = 914, space_frequency = 1086):
     with wave.open(filename, 'rb') as wave_file:
-        sampling_rate = 8000          # Sampling Rate
-        window_size = 32           # windows size Integer
+        sampling_rate = wave_file.getframerate()
+        window_size = int(sampling_rate / 250)
 
         mark_q = array.array('l', [0] * window_size)
         mark_i = array.array('l', [0] * window_size)

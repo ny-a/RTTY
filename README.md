@@ -46,7 +46,7 @@ To find MARK & SPACE frequences, You can use any spectrum analyze tools on your 
 Please specify an appropriate audio file for the input.
 This program assumes 8KHz sampling, mono, 8bit quantization, and no sign.
 ~~~
-python -m src.main > rtty.csv
+python -m src.main
 ~~~
 Demodulation example
 ![](img/2021-02-01.png)

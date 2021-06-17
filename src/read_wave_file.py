@@ -28,4 +28,4 @@ def read_wave_file(filename, signed = False, mark_frequency = 914, space_frequen
             space_i.set(int(frame_value * np.cos(factor * space_frequency)))
             mark_value = mark_q.sum * mark_q.sum + mark_i.sum * mark_i.sum
             space_value = space_q.sum * space_q.sum + space_i.sum * space_i.sum
-            print(mark_value, space_value, int(mark_value > space_value), sep=",")
+            yield (mark_value, space_value, j)

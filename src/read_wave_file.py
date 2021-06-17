@@ -1,6 +1,5 @@
 import wave
 import numpy as np
-import sys
 
 from .window_sum import WindowSum 
 
@@ -30,11 +29,3 @@ def read_wave_file(filename, signed = False, mark_frequency = 914, space_frequen
             mark_value = np.sqrt((mark_q.sum)**2 + (mark_i.sum)**2)
             space_value = np.sqrt((space_q.sum)**2 + (space_i.sum)**2)
             print(mark_value, space_value, int(mark_value > space_value), sep=",")
-
-
-if __name__ == '__main__':
-    if len(sys.argv) > 1:
-        filename = sys.argv[1]
-    else:
-        filename = 'rtty3s.wav'
-    read_wave_file(filename)

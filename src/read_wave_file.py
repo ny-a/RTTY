@@ -21,11 +21,12 @@ def read_wave_file(filename, signed = False, mark_frequency = 914, space_frequen
         space_i = WindowSum(window_size)
         for j in range(wave_file.getnframes()):
             frame_value = int.from_bytes(wave_file.readframes(1), byteorder=byteorder, signed=signed) - offset
-            factor = np.pi * 2.0 * j / sampling_rate
+            time = j / sampling_rate
+            factor = np.pi * 2.0 * time
             mark_q.set(int(frame_value * np.sin(factor * mark_frequency)))
             mark_i.set(int(frame_value * np.cos(factor * mark_frequency)))
             space_q.set(int(frame_value * np.sin(factor * space_frequency)))
             space_i.set(int(frame_value * np.cos(factor * space_frequency)))
             mark_value = mark_q.sum * mark_q.sum + mark_i.sum * mark_i.sum
             space_value = space_q.sum * space_q.sum + space_i.sum * space_i.sum
-            yield (mark_value, space_value, j)
+            yield (mark_value, space_value, time)

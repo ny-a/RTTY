@@ -10,5 +10,5 @@ if __name__ == '__main__':
         filename = 'rtty3s.wav'
 
     with open('{}.csv'.format(filename), 'w') as output:
-        for mark_value, space_value, j in read_wave_file(filename):
-            output.write('{},{},{}\n'.format(mark_value, space_value, int(mark_value > space_value)))
+        for mark_value, space_value, time in read_wave_file(filename):
+            output.write('{},{},{},{}\n'.format(mark_value, space_value, int(mark_value > space_value), time))

@@ -38,8 +38,9 @@ def binary_values_to_bit_duration(binary_values):
 def bit_duration_to_bit_values(bit_duration_values, baud_rate=45.45, minimum_bit_width=0.25):
     bit_duration = 1 / baud_rate
     minimum_duration = bit_duration * minimum_bit_width
+    duration = 0
     for bit_value, original_duration in bit_duration_values:
-        duration = original_duration
+        duration += original_duration
         while duration > minimum_duration:
             if duration > bit_duration:
                 width = 1

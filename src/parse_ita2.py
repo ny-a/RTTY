@@ -1,3 +1,6 @@
+# cf. https://en.wikipedia.org/wiki/Baudot_code#ITA2
+
+# Letter の表
 ITA2TABLE_LS = {
     "00000": "[Null]",
     "00010": "[Carriage return]",
@@ -33,6 +36,7 @@ ITA2TABLE_LS = {
     "11111": "[LS]",
 }
 
+# Figure の表
 ITA2TABLE_FS = {
     "00000": "[Null]",
     "00010": "[Carriage return]",
@@ -70,14 +74,19 @@ ITA2TABLE_FS = {
 
 
 def parse_ita2(bit_chunks):
+    # 初期状態を Letter にする
     mode = '[LS]'
     for chunk in bit_chunks:
         if mode == '[LS]':
+            # Letter の状態のときは Letter の表を見る
             char = ITA2TABLE_LS[chunk]
         else:
+            # Figure の状態のときは Figure の表を見る
             char = ITA2TABLE_FS[chunk]
 
         if char == '[FS]' or char == '[LS]':
+            # モード切り替えのコードが来たらモードを切り替える
             mode = char
         else:
+            # それ以外であれば文字とchunkを出力する
             yield (char, chunk)

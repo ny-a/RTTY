@@ -15,12 +15,12 @@ def read_wave_file(filename, signed = False, mark_frequency = 914, space_frequen
         # 平滑化するウィンドウサイズをサンプリングレートから指定
         window_size = int(sampling_rate / 250)
         # 量子化ビット数をファイルから取得
-        bits = (wave_file.getsampwidth() * 8) - 1
+        bits = (wave_file.getsampwidth() * 8)
         # 符号なしであれば符号付きに変換する
         if signed:
             offset = 0
         else:
-            offset = 1 << bits
+            offset = 1 << bits - 1
 
         # 平滑化をリングバッファを使って高速化する
         # set で与えた今の値を合計に足して、ウィンドウからはみ出た値を引くことで、

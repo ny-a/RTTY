@@ -16,7 +16,7 @@ def read_wave_file(filename, signed = False, mark_frequency = 914, space_frequen
         window_size = int(sampling_rate / 250)
         # 量子化ビット数をファイルから取得
         bits = (wave_file.getsampwidth() * 8) - 1
-        # 符号付きであれば符号なしに変換する
+        # 符号なしであれば符号付きに変換する
         if signed:
             offset = 0
         else:
@@ -30,7 +30,7 @@ def read_wave_file(filename, signed = False, mark_frequency = 914, space_frequen
         space_q = WindowSum(window_size)
         space_i = WindowSum(window_size)
         for j in range(wave_file.getnframes()):
-            # 符号なし整数値で取得する
+            # 符号付き整数値で取得する
             frame_value = int.from_bytes(wave_file.readframes(1), byteorder=byteorder, signed=signed) - offset
             # 経過時刻を計算する
             time = j / sampling_rate

@@ -1,5 +1,8 @@
 
-def frame_to_bit_chunks(frame_values, baud_rate=45.45, start_bit=0, stop_bit=1):
+SPACE = 0
+MARK = 1
+
+def frame_to_bit_chunks(frame_values, baud_rate=45.45, start_bit=SPACE, stop_bit=MARK):
     """フレームごとの信号強度からデータビットのまとまりに変換する"""
 
     binary_values = frame_to_binary_values(frame_values)
@@ -14,14 +17,14 @@ def frame_to_binary_values(frame_values, threshold=1.0):
     """フレームごとの信号強度から0/1を判定する"""
 
     # ヒステリシスを持たせるときの前の状態
-    current_binary_value = 0
+    current_binary_value = SPACE
     for mark_value, space_value, time in frame_values:
         # mark の強度が space の強度の threshold 倍を越えていれば mark と判断する
         if mark_value > space_value * threshold:
-            current_binary_value = 1
+            current_binary_value = MARK
         # space の強度が mark の強度の threshold 倍を越えていれば space と判断する
         if space_value > mark_value * threshold:
-            current_binary_value = 0
+            current_binary_value = SPACE
         yield (current_binary_value, time)
 
 
@@ -29,11 +32,11 @@ def binary_values_to_bit_duration(binary_values):
     """連続する0/1の長さを測る"""
 
     # 前の値
-    previous_binary_value = 0
+    previous_binary_value = SPACE
     # 前の値に変化した経過時間
     previous_time = 0
     # 今の値
-    current_binary_value = 0
+    current_binary_value = SPACE
     # 今の値に変化した経過時間
     current_time = 0
     for binary_value, time in binary_values:
@@ -76,7 +79,7 @@ def bit_duration_to_bit_values(bit_duration_values, baud_rate=45.45, minimum_bit
             duration -= bit_duration
 
 
-def bit_values_to_bit_chunks(bit_values, start_bit=0, stop_bit=1, lsb_on_left=True):
+def bit_values_to_bit_chunks(bit_values, start_bit=SPACE, stop_bit=MARK, lsb_on_left=True):
     """1bit ごとの値からデータビットを抽出する
 
     bit_index|ビットの役割

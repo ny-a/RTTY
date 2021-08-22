@@ -68,15 +68,11 @@ def bit_duration_to_bit_values(bit_duration_values, baud_rate=45.45, minimum_bit
         duration += original_duration
         while duration > minimum_duration:
             # 今の値の経過時間が基準を超えている間繰り返す
-            if duration > bit_duration:
-                # 1bit 分以上続いていたら 1bit 分だけ出力する
-                width = 1
-            else:
-                # 1bit より少なければ、全部出力する
-                width = duration / bit_duration
+            handle_duration = min(bit_duration, duration)
+            width = handle_duration / bit_duration
             yield (bit_value, width)
             # 出力した分だけ経過時間を減らす
-            duration -= bit_duration
+            duration -= handle_duration
 
 
 def bit_values_to_bit_chunks(bit_values, start_bit=SPACE, stop_bit=MARK, lsb_on_left=True):
